@@ -1,11 +1,17 @@
-import numpy as np
-from sklearn.naive_bayes import GaussianNB
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from MITBayes import GaussianNB
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
 
-X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
-Y = np.array([1, 1, 1, 2, 2, 2])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+
 clf = GaussianNB()
-clf.fit(X, Y)
-print(clf.predict([[-0.8, -1]]))
-clf_pf = GaussianNB()
-clf_pf.partial_fit(X, Y, np.unique(Y))
-print(clf_pf.predict([[-0.8, -1]]))
+clf.fit(X_train,y_train)
+pred = clf.predict(X_test)
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_test,pred))
+
+for i in range(len(y_test)):
+    print(y_test[i],pred[i])

@@ -17,7 +17,8 @@ class Knn:
     def predict(self,X_test):
         l = list()
         for row in X_test:
-            l.append(sorted([(label,euclidianDistance(row,point)) for label,point in zip(self.Y,self.X)],key=lambda tp: tp[1]))
+            labelAndEuclcidianDistances = [(label,euclidianDistance(row,point)) for label,point in zip(self.Y,self.X)]
+            l.append(sorted(labelAndEuclcidianDistances,key=lambda tp: tp[1]))
         return self.closeKN(l)
     
     def closeKN(self,l):
